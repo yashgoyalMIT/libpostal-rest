@@ -93,5 +93,5 @@ func ParserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func HealthcheckHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write("OK")
+	return fmt.Println("OK")
 }

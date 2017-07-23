@@ -37,7 +37,7 @@ func main() {
 	router.HandleFunc("/health", HealthHandler).Methods("GET")
 	router.HandleFunc("/expand", ExpandHandler).Methods("POST")
 	router.HandleFunc("/parser", ParserHandler).Methods("POST")
-	router.HandleFunc("/health-check",HealthcheckHandler).Methods("GET")
+	router.HandleFunc("/health-check", HealthcheckHandler).Methods("GET")
 
 	s := &http.Server{Addr: listenSpec, Handler: router}
 	go func() {
@@ -55,7 +55,7 @@ func main() {
 
 	<-stop
 	fmt.Println("\nShutting down the server...")
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, _ := context.WithTimeout(context.Background(), 10 * time.Second)
 	s.Shutdown(ctx)
 	fmt.Println("Server stopped")
 }
@@ -93,5 +93,8 @@ func ParserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func HealthcheckHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("OK")
+	// A very simple health check.
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	io.WriteString(w, `{"alive": true}`)
 }
